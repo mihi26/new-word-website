@@ -1,15 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/common/Button"
 import { RepeatIcon } from "../../components/icons/RepeatIcon"
 import { VolumeUp } from "../../components/icons/VolumeUp"
 import UserNewWordTable from "../../components/table/UserNewWordTable"
+import { getNewWords, selectWords } from "../../store/reducer/word"
+import { AppDispatch } from "../../store"
 
 const HomePage = () => {
+  const { words } = useSelector(selectWords)
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const navigateViewDetail = () => {
     navigate("/")
   }
+
+  useEffect(() => {
+    dispatch(getNewWords())
+  }, [])
 
   const handleReadWord = () => {}
   const handleRepeatWord = () => {
@@ -43,7 +52,7 @@ const HomePage = () => {
     {
       id: 1,
       name: "prosody",
-      date: "25/12/2023"
+      date: "25/12/2023",
     },
   ]
 
@@ -96,7 +105,7 @@ const HomePage = () => {
           <div className="text-2xl text-black font-medium">Your new words</div>
         </div>
         <div className="p-[20px] flex flex-col gap-[10px]">
-          <UserNewWordTable tableHeader={tableHeader} tableData={tableData} />
+          <UserNewWordTable tableHeader={tableHeader} tableData={words} keyName="word" />
         </div>
       </div>
     </div>

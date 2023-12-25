@@ -8,6 +8,7 @@ const UserNewWordTable = (props) => {
     onClickVolume,
     onClickRepeat,
     keyId = "id",
+    keyName = "name"
   } = props
   return (
     <div className="flex flex-col w-full bg-white shadow rounded">
@@ -21,7 +22,7 @@ const UserNewWordTable = (props) => {
       {tableData.map((item, index) => (
         <div className="flex items-center min-h-[40px] py-1" key={item[keyId]}>
           <div className="w-[40%] text-center">{index + 1}</div>
-          <div className="flex-1 text-center break-all">{item.name}</div>
+          <div className="flex-1 text-center break-all">{item[keyName]}</div>
           <div className="w-[20%] text-center">{item.date}</div>
           <div className="w-[20%] flex gap-3 justify-center">
             <VolumeUp
