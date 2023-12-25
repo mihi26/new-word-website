@@ -30,7 +30,7 @@ const Button = (props: IButtonProps) => {
       onClick={onClick}
     >
       {icon}
-      <div className={`${icon ? "ml-[10px]" : ""} ${textColor}`}>{label}</div>
+      {label ? <div className={`${icon ? "ml-[10px]" : ""} ${textColor}`}>{label}</div> : ""}
     </div>
   )
 }

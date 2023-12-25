@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { AdminIcon } from "./icons/AdminIcon"
 import { CalendarIcon } from "./icons/CalendarIcon"
 import { DownArrow } from "./icons/DownArrow"
 import { GlobeLearningIcon } from "./icons/GlobeLearningIcon"
@@ -19,19 +20,22 @@ const sidebarMenu = [
         label: "Home Page",
         icon: <HomeIcon width={24} height={24} />,
         url: "/home",
-      },
-      {
-        id: "new-words",
-        label: "New Words",
-        icon: <WordIcon width={24} height={24} />,
-        url: "/new-words",
-      },
-      {
-        id: "today-new-words",
-        label: "Today New Word",
-        icon: <CalendarIcon width={24} height={24} />,
-        url: "/today-new-words"
       }
+    ],
+    isShowSubMenu: false,
+  },
+  {
+    id: 1,
+    label: "Admin",
+    icon: <AdminIcon width={24} height={24} />,
+    hasAuthority: true,
+    subMenu: [
+      {
+        id: "word-management",
+        label: "Word management",
+        icon: <WordIcon width={24} height={24} />,
+        url: "/admin/word-management",
+      },
     ],
     isShowSubMenu: false,
   },
