@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/common/Button"
@@ -6,6 +6,9 @@ import UserNewWordTable from "../../components/table/UserNewWordTable"
 import { getNewWords, selectWords } from "../../store/reducer/word"
 import { AppDispatch } from "../../store"
 import TextToSpeech from "../../components/common/TextToSpeech"
+import { IWord } from "../../types"
+
+type TodayWordFunction = () => IWord
 
 const HomePage = () => {
   const { words, textToSpeechWord } = useSelector(selectWords)
@@ -20,7 +23,7 @@ const HomePage = () => {
   }, [])
 
 
-  const todayWord = () => {
+  const todayWord: TodayWordFunction = () => {
     return words?.slice(-1)[0]
   }
 

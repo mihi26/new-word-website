@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { AdminIcon } from "./icons/AdminIcon"
-import { CalendarIcon } from "./icons/CalendarIcon"
 import { DownArrow } from "./icons/DownArrow"
 import { GlobeLearningIcon } from "./icons/GlobeLearningIcon"
 import { HomeIcon } from "./icons/HomeIcon"

@@ -5,7 +5,7 @@ import Button from "./Button"
 
 const TextToSpeech = ({ text }) => {
   const [isRepeat, setIsRepeat] = useState(false)
-  const [utterance, setUtterance] = useState(null)
+  const [utterance, setUtterance] = useState<any>(null)
 
   useEffect(() => {
     const synth = window.speechSynthesis

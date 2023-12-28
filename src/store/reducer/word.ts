@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from ".."
 import { setLoading } from "./loading"
 import ApiClientWithToken from "../../api/api"
+import { IWord } from "../../types"
 interface IBookState {
-  words: [],
+  words: IWord[],
   textToSpeechWord: ''
 }
 

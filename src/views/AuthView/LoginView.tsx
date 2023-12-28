@@ -1,21 +1,15 @@
-import { useNavigate } from "react-router-dom"
-import Button from "../../components/common/Button"
 import { useFormik } from "formik"
+import { useNavigate } from "react-router-dom"
 import * as Yup from "yup"
-import { setLoading } from "../../store/reducer/loading"
-import { LoginClient } from "../../api/api"
-import { useDispatch } from "react-redux"
-import { AppDispatch } from "../../store"
-import { useToast } from "../../hooks/useToast"
-import { saveUserCredentials } from "../../store/reducer/auth"
+import Button from "../../components/common/Button"
 import TextInput from "../../components/common/TextInput"
 
 const LoginView = () => {
   const navigate = useNavigate()
 
-  const { success, error } = useToast()
+  // const { success, error } = useToast()
 
-  const dispatch = useDispatch<AppDispatch>()
+  // const dispatch = useDispatch<AppDispatch>()
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +22,7 @@ const LoginView = () => {
     }),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       // dispatch(setLoading(true))
       // const payload = {
       //   username: values.username,
