@@ -3,11 +3,13 @@ import { RootState } from ".."
 import { setLoading } from "./loading"
 import ApiClientWithToken from "../../api/api"
 interface IBookState {
-  words: []
+  words: [],
+  textToSpeechWord: ''
 }
 
 const initialState: IBookState = {
-  words: []
+  words: [],
+  textToSpeechWord: ''
 }
 
 export const getNewWords = createAsyncThunk(
@@ -32,9 +34,11 @@ export const wordSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getNewWords.fulfilled, (state, { payload }) => {
       state.words = payload.data
+      payload.data.forEach(item => {
+        state.textToSpeechWord += `${item.word}. ${item.definition.map(def => `Definition: ${def.meaning}`).join('. ')}. Example: ${item.example}. `
+      })
     })
   },
 })
-// export const { setCurrentBook } = wordSlice.actions
 export const selectWords = (state: RootState) => state["words"]
 export default wordSlice.reducer
