@@ -1,10 +1,16 @@
 import { Fragment, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useToast } from "../hooks/useToast"
+import { AppDispatch } from "../store"
+import { logOut } from "../store/reducer/auth"
 import { AdminIcon } from "./icons/AdminIcon"
 import { DownArrow } from "./icons/DownArrow"
 import { GlobeLearningIcon } from "./icons/GlobeLearningIcon"
 import { HomeIcon } from "./icons/HomeIcon"
 import { RightArrow } from "./icons/RightArrow"
+import { SignOutIcon } from "./icons/SignOutIcon"
+import { UserIcon } from "./icons/UserIcon"
 import { WordIcon } from "./icons/WordIcon"
 
 const sidebarMenu = [
@@ -19,7 +25,7 @@ const sidebarMenu = [
         label: "Home Page",
         icon: <HomeIcon width={24} height={24} />,
         url: "/home",
-      }
+      },
     ],
     isShowSubMenu: false,
   },
@@ -38,13 +44,36 @@ const sidebarMenu = [
     ],
     isShowSubMenu: false,
   },
+  {
+    id: 2,
+    label: "User",
+    icon: <UserIcon width={24} height={24} />,
+    hasAuthority: false,
+    subMenu: [
+      // {
+      //   id: "your-profile",
+      //   label: "Your profile",
+      //   icon: <SearchIcon width={24} height={24} />,
+      //   url: "/user/profile",
+      // },
+      {
+        id: "sign-out",
+        label: "Sign out",
+        icon: <SignOutIcon width={24} height={24} />,
+        url: "/auth/login",
+      },
+    ],
+    isShowSubMenu: false,
+  },
 ]
 
 function Sidebar() {
   const [sidebarState, setSidebarState] = useState(sidebarMenu)
 
   const navigate = useNavigate()
+  const { success } = useToast()
   const location = useLocation()
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleToggleSubMenu = (id: number) => {
     const newState = sidebarState.map((item) => {
@@ -61,12 +90,18 @@ function Sidebar() {
 
   const handleRedirect = (url) => {
     navigate(url)
+    if (url == "/auth/login") {
+      dispatch(logOut())
+      success("Signed out successfully")
+    }
   }
 
   return (
     <div className="w-[300px] bg-white h-full fixed flex flex-col">
       <div className="p-[20px] h-[85px] flex justify-between items-center">
-        <div className="text-lg font-semibold text-blue cursor-default">NEW WORD EVERYDAY</div>
+        <div className="text-lg font-semibold text-blue cursor-default">
+          NEW WORD EVERYDAY
+        </div>
       </div>
       <div className="pt-6 flex flex-col">
         {sidebarState.map((item) => (

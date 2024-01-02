@@ -8,7 +8,6 @@ import { AppDispatch } from "../../store"
 import { setLoading } from "../../store/reducer/loading"
 import { LoginClient } from "../../api/api"
 import { useToast } from "../../hooks/useToast"
-import { saveUserCredentials } from "../../store/reducer/auth"
 
 const RegisterView = () => {
   const navigate = useNavigate()
@@ -18,44 +17,33 @@ const RegisterView = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      username: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please enter your name"),
-      username: Yup.string().required("Username is required"),
+      email: Yup.string().required("Email is required").email("Invalid email"),
       password: Yup.string().required("Password is required"),
       confirmPassword: Yup.string().oneOf(
         [Yup.ref("password")],
-        "Your password doesn't match with the inital password"
+        "Your password doesn't match with the initial password"
       ),
     }),
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: async (values) => {
       dispatch(setLoading(true))
       const payload = {
-        name: values.name,
-        username: values.username,
+        email: values.email,
         password: values.password,
       }
       try {
-        const res = await LoginClient.post("auth/register", payload)
-        const userCredentials = {
-          accessToken: res?.token,
-          userInfo: {
-            userId: res?.userId,
-            username: res?.username,
-            name: res?.name,
-            address: res?.address,
-            phoneNumber: res?.phoneNumber,
-            accountStatus: res?.accountStatus,
-            role: res?.role,
-          },
+        dispatch(setLoading(true))
+        const res = await LoginClient.post("auth/signup", payload)
+        if (res.message == "success") {
+          success("Register completed")
+          navigate("/auth/login")
         }
-        dispatch(saveUserCredentials(userCredentials))
-        success("Register completed")
-        navigate("/")
       } catch {
         error("Register failed")
       } finally {
@@ -79,28 +67,14 @@ const RegisterView = () => {
       </div>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <div className="text-sm text-[14px] mb-2 text-[#78828A]">Name</div>
+          <div className="text-sm text-[14px] mb-2 text-[#78828A]">Email</div>
           <div className="min-h-[52px]">
             <TextInput
               type="text"
-              field="name"
-              placeholder="Enter your name"
+              field="email"
+              placeholder="Enter your email"
               onChange={setInputField}
-              errorMessage={formik.errors.name}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-sm text-[14px] mb-2 text-[#78828A]">
-            Username
-          </div>
-          <div className="min-h-[52px]">
-            <TextInput
-              type="text"
-              field="username"
-              placeholder="Enter your username"
-              onChange={setInputField}
-              errorMessage={formik.errors.username}
+              errorMessage={formik.errors.email}
             />
           </div>
         </div>

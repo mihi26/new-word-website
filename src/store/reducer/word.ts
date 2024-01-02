@@ -3,12 +3,12 @@ import { RootState } from ".."
 import { setLoading } from "./loading"
 import ApiClientWithToken from "../../api/api"
 import { IWord } from "../../types"
-interface IBookState {
+interface IWordState {
   words: IWord[],
-  textToSpeechWord: ''
+  textToSpeechWord: string
 }
 
-const initialState: IBookState = {
+const initialState: IWordState = {
   words: [],
   textToSpeechWord: ''
 }
@@ -19,7 +19,7 @@ export const getNewWords = createAsyncThunk(
     dispatch(setLoading(true))
     try {
       const res = await ApiClientWithToken.get("word")
-      return res
+      return res.data
     } catch (error) {
       return rejectWithValue(error)
     } finally {

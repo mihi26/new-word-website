@@ -1,62 +1,52 @@
 import { useFormik } from "formik"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import * as Yup from "yup"
+import { LoginClient } from "../../api/api"
 import Button from "../../components/common/Button"
 import TextInput from "../../components/common/TextInput"
+import { useToast } from "../../hooks/useToast"
+import { AppDispatch } from "../../store"
+import { saveUserCredentials } from "../../store/reducer/auth"
+import { setLoading } from "../../store/reducer/loading"
 
 const LoginView = () => {
   const navigate = useNavigate()
 
-  // const { success, error } = useToast()
+  const { success, error } = useToast()
 
-  // const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Username is required"),
+      email: Yup.string().required("Email is required").email("Invalid email"),
       password: Yup.string().required("Password is required"),
     }),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async () => {
-      // dispatch(setLoading(true))
-      // const payload = {
-      //   username: values.username,
-      //   password: values.password,
-      // }
-      // try {
-      //   const res = await LoginClient.post("auth/authenticate", payload)
-      //   if (res.accountStatus == "BANNED") {
-      //     error(
-      //       "Your account has been banned ! Please contact our administrator"
-      //     )
-      //   } else {
-      //     const userCredentials = {
-      //       accessToken: res?.token,
-      //       userInfo: {
-      //         userId: res?.userId,
-      //         username: res?.username,
-      //         name: res?.name,
-      //         address: res?.address,
-      //         phoneNumber: res?.phoneNumber,
-      //         accountStatus: res?.accountStatus,
-      //         role: res?.role,
-      //       },
-      //     }
-      //     dispatch(saveUserCredentials(userCredentials))
-      //     success("Login successfully")
-      //     navigate("/")
-      //   }
-      // } catch {
-      //   error("Login failed")
-      // } finally {
-      //   dispatch(setLoading(false))
-      // }
-      navigate("/")
+    onSubmit: async (values) => {
+      dispatch(setLoading(true))
+      const payload = {
+        email: values.email,
+        password: values.password,
+      }
+      try {
+        const res = await LoginClient.post("auth/login", payload)
+        const userCredentials = {
+          accessToken: res?.access_token,
+        }
+        dispatch(saveUserCredentials(userCredentials))
+        success("Login successfully")
+        navigate("/home")
+      } catch {
+        error("Login failed")
+      } finally {
+        dispatch(setLoading(false))
+      }
     },
   })
 
@@ -75,16 +65,14 @@ const LoginView = () => {
       </div>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <div className="text-sm text-[14px] mb-2 text-[#78828A]">
-            Username
-          </div>
+          <div className="text-sm text-[14px] mb-2 text-[#78828A]">Email</div>
           <div className="h-[52px]">
             <TextInput
               type="text"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               onChange={setInputField}
-              field="username"
-              errorMessage={formik.errors.username}
+              field="email"
+              errorMessage={formik.errors.email}
             />
           </div>
         </div>

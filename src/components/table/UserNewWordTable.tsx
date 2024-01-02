@@ -21,7 +21,7 @@ const UserNewWordTable = (props) => {
           <div className="w-[20%] text-center break-all">{item[keyName]}</div>
           <div className="w-[35%]">
             {item.definition?.map(def => (
-              <div className="p-1">
+              <div className="p-1" key={`${def.type} ${def.meaning}`}>
                 - {def.meaning}
               </div>
               ))}
