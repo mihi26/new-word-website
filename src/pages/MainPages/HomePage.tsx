@@ -19,12 +19,13 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    dispatch(getNewWords({
-      page: 1,
-      limit: 10
-    }))
+    dispatch(
+      getNewWords({
+        page: 1,
+        limit: 10,
+      })
+    )
   }, [])
-
 
   const todayWord: TodayWordFunction = () => {
     return words?.slice(-1)[0]
@@ -38,7 +39,7 @@ const HomePage = () => {
     },
     {
       id: 1,
-      label: "Name",
+      label: "Word",
       class: "w-[20%] text-center",
     },
     {
@@ -80,7 +81,7 @@ const HomePage = () => {
           <div className="text-base">
             {todayWord()?.definition?.map((definition) => (
               <div className="" key={definition.type + definition.meaning}>
-                {definition.meaning}
+                {definition.meaning} ({definition.meaningVN})
               </div>
             ))}
           </div>
@@ -88,10 +89,8 @@ const HomePage = () => {
       </div>
       <div className="flex flex-col rounded-b bg-white shadow">
         <div className="flex h-[75px] justify-between items-center px-[20px] border-b">
-          <div className="text-2xl text-black font-medium">Your new words</div>
-          <div className="w-[84px] h-[31px] text-sm">
-            <TextToSpeech text={textToSpeechWord} />
-          </div>
+          <div className="text-2xl text-black font-medium">Today's new words</div>
+          <TextToSpeech text={textToSpeechWord} />
         </div>
         <div className="p-[20px] flex flex-col gap-[10px]">
           <UserNewWordTable

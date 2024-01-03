@@ -21,7 +21,7 @@ const AllWordsPage = () => {
     },
     {
       id: 1,
-      label: "Name",
+      label: "Word",
       class: "w-[20%] text-center",
     },
     {

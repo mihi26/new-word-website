@@ -22,12 +22,12 @@ const UserNewWordTable = (props) => {
           <div className="w-[35%]">
             {item.definition?.map(def => (
               <div className="p-1" key={`${def.type} ${def.meaning}`}>
-                - {def.meaning}
+                - {def.meaning} ({def.meaningVN})
               </div>
               ))}
           </div>
           <div className="w-[20%] p-1">
-            {item.example}
+            {item.example} ({item.exampleVN})
           </div>
           <div className="w-[20%] text-center">
             {moment(item.createdAt).format("DD-MM-YYYY")}

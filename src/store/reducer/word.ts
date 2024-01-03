@@ -42,10 +42,10 @@ export const wordSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getNewWords.fulfilled, (state, { payload }) => {
       state.words = payload.data
-      payload.data.forEach((item) => {
-        state.textToSpeechWord += `${item.word}. ${item.definition
-          .map((def) => `Definition: ${def.meaning}`)
-          .join(". ")}. Example: ${item.example}. `
+      payload.data.forEach((item, index) => {
+        state.textToSpeechWord += `Number ${index + 1}. ${item.word}. ${item.definition
+          .map((def) => `Definition. ${def.meaning}`)
+          .join(". ")}. Example. ${item.example}. `
       })
     })
   },

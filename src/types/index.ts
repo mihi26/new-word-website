@@ -1,6 +1,7 @@
 export interface IWordDefinition {
   type: string,
-  meaning: string
+  meaning: string,
+  meaningVN: string
 }
 
 export interface IWord {
@@ -9,7 +10,8 @@ export interface IWord {
   updatedAt: string,
   word: string,
   definition: IWordDefinition[],
-  example: string
+  example: string,
+  exampleVN: string
 }
 export interface IWordMeta {
   page: number,
