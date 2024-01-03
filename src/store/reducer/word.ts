@@ -16,7 +16,7 @@ const initialState: IWordState = {
 
 export const getNewWords = createAsyncThunk(
   "words/getWords",
-  async (payload, { rejectWithValue, dispatch }) => {
+  async (payload: any | undefined, { rejectWithValue, dispatch }) => {
     dispatch(setLoading(true))
     try {
       if (payload) {

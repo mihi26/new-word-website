@@ -7,7 +7,7 @@ import { getNewWords, selectWords } from "../../store/reducer/word"
 
 const AllWordsPage = () => {
   const { words, textToSpeechWord } = useSelector(selectWords)
-  const [wordParams, setWordParams] = useState({
+  const [wordParams] = useState({
     page: 1,
     limit: 10,
   })

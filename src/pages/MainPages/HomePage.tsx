@@ -19,7 +19,10 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    dispatch(getNewWords())
+    dispatch(getNewWords({
+      page: 1,
+      limit: 10
+    }))
   }, [])
 
 
