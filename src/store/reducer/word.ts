@@ -3,21 +3,28 @@ import { RootState } from ".."
 import { setLoading } from "./loading"
 import ApiClientWithToken from "../../api/api"
 import { IWord } from "../../types"
+import { convertQueryString } from "../../utils"
 interface IWordState {
-  words: IWord[],
+  words: IWord[]
   textToSpeechWord: string
 }
 
 const initialState: IWordState = {
   words: [],
-  textToSpeechWord: ''
+  textToSpeechWord: "",
 }
 
 export const getNewWords = createAsyncThunk(
   "words/getWords",
-  async (_, { rejectWithValue, dispatch }) => {
+  async (payload, { rejectWithValue, dispatch }) => {
     dispatch(setLoading(true))
     try {
+      if (payload) {
+        const res = await ApiClientWithToken.get(
+          `word${convertQueryString(payload)}`
+        )
+        return res.data
+      }
       const res = await ApiClientWithToken.get("word")
       return res.data
     } catch (error) {
@@ -35,8 +42,10 @@ export const wordSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getNewWords.fulfilled, (state, { payload }) => {
       state.words = payload.data
-      payload.data.forEach(item => {
-        state.textToSpeechWord += `${item.word}. ${item.definition.map(def => `Definition: ${def.meaning}`).join('. ')}. Example: ${item.example}. `
+      payload.data.forEach((item) => {
+        state.textToSpeechWord += `${item.word}. ${item.definition
+          .map((def) => `Definition: ${def.meaning}`)
+          .join(". ")}. Example: ${item.example}. `
       })
     })
   },

@@ -11,3 +11,9 @@ export interface IWord {
   definition: IWordDefinition[],
   example: string
 }
+export interface IWordMeta {
+  page: number,
+  limit: number,
+  totalPages: number,
+  total: number
+}

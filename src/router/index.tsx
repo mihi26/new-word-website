@@ -9,6 +9,7 @@ import AuthGuard from "../components/guards/AuthGuard"
 import GuestGuard from "../components/guards/GuestGuard"
 import AuthPage from "../pages/AuthPages"
 import NotFoundPage from "../pages/ErrorPages/NotFoundPage"
+import AllWordsPage from "../pages/MainPages/AllWordsPage"
 import HomePage from "../pages/MainPages/HomePage"
 import MainPage from "../pages/MainPages/MainPage"
 import LoginView from "../views/AuthView/LoginView"
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
       >
         <Route index element={<Navigate to="home" />} />
         <Route path="home" element={<HomePage />} />
+        <Route path="all-words" element={<AllWordsPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Route>

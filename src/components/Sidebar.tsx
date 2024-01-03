@@ -5,6 +5,7 @@ import { useToast } from "../hooks/useToast"
 import { AppDispatch } from "../store"
 import { logOut } from "../store/reducer/auth"
 import { AdminIcon } from "./icons/AdminIcon"
+import { DictionaryIcon } from "./icons/DictionaryIcon"
 import { DownArrow } from "./icons/DownArrow"
 import { GlobeLearningIcon } from "./icons/GlobeLearningIcon"
 import { HomeIcon } from "./icons/HomeIcon"
@@ -26,6 +27,12 @@ const sidebarMenu = [
         icon: <HomeIcon width={24} height={24} />,
         url: "/home",
       },
+      {
+        id: "all-words",
+        label: "All Words",
+        icon: <DictionaryIcon width={24} height={24} />,
+        url: "/all-words"
+      }
     ],
     isShowSubMenu: false,
   },
