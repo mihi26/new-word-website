@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import { RepeatIcon } from "../icons/RepeatIcon"
 import { VolumeUp } from "../icons/VolumeUp"
-import Button from "./Button"
+// import Button from "./Button"
 
 const TextToSpeech = ({ text }) => {
   const [isRepeat, setIsRepeat] = useState(false)
-  const [isPause, setIsPause] = useState(true)
+  const [isPause] = useState(true)
   const [utterance, setUtterance] = useState<any>(null)
-  const [voices, setVoices] = useState<any>([])
+  const [setVoices] = useState<any>([])
 
   useEffect(() => {
     const synth = window.speechSynthesis
