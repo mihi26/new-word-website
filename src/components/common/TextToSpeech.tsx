@@ -7,12 +7,12 @@ const TextToSpeech = ({ text }) => {
   const [isRepeat, setIsRepeat] = useState(false)
   const [isPause] = useState(true)
   const [utterance, setUtterance] = useState<any>(null)
-  const [setVoices] = useState<any>([])
+  // const [setVoices] = useState<any>([])
 
   useEffect(() => {
     const synth = window.speechSynthesis
     const u = new SpeechSynthesisUtterance(text)
-    setVoices(window.speechSynthesis.getVoices())
+    // setVoices(window.speechSynthesis.getVoices())
     setUtterance(u)
 
     return () => {
