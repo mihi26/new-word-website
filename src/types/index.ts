@@ -5,7 +5,7 @@ export interface IWordDefinition {
 }
 
 export interface IWord {
-  id: Number,
+  id: number,
   createdAt: string,
   updatedAt: string,
   word: string,

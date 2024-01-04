@@ -7,23 +7,28 @@ const TextToSpeech = ({ text }) => {
   const [isRepeat, setIsRepeat] = useState(false)
   const [isPause] = useState(true)
   const [utterance, setUtterance] = useState<any>(null)
-  // const [setVoices] = useState<any>([])
+  const [voices, setVoices] = useState<any>([])
 
   useEffect(() => {
     const synth = window.speechSynthesis
-    const u = new SpeechSynthesisUtterance(text)
-    // setVoices(window.speechSynthesis.getVoices())
-    setUtterance(u)
-
+    setVoices(synth.getVoices())
+    console.log(synth.getVoices())
     return () => {
       synth.cancel()
     }
   }, [text])
 
   const handlePlay = () => {
-    const synth = window.speechSynthesis
     if (isPause) {
-      synth.speak(utterance)
+      const synth = window.speechSynthesis
+      const voices = synth.getVoices()
+      console.log(voices)
+      text.map(data => {
+        let u = new SpeechSynthesisUtterance(data.text)
+        u.voice = data.key === 'vn' ? voices.find(voice => voice.lang === 'vi-VN') : voices.find(voice => voice.lang === 'en-US')
+        console.log(u.voice)
+        synth.speak(u)
+      })
     }
   }
 
@@ -31,7 +36,6 @@ const TextToSpeech = ({ text }) => {
     const synth = window.speechSynthesis
     if (isRepeat) {
       setIsRepeat(false)
-      synth.cancel()
     } else {
       setIsRepeat(true)
       utterance.onend = function () {

@@ -6,12 +6,12 @@ import { IWord } from "../../types"
 import { convertQueryString } from "../../utils"
 interface IWordState {
   words: IWord[]
-  textToSpeechWord: string
+  textToSpeechWord: []
 }
 
 const initialState: IWordState = {
   words: [],
-  textToSpeechWord: "",
+  textToSpeechWord: [],
 }
 
 export const getNewWords = createAsyncThunk(
@@ -42,11 +42,17 @@ export const wordSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getNewWords.fulfilled, (state, { payload }) => {
       state.words = payload.data
+      const arrayMeaning = []
       payload.data.forEach((item, index) => {
-        state.textToSpeechWord += `Number ${index + 1}. ${item.word}. ${item.definition
-          .map((def) => `Definition. ${def.meaning}`)
-          .join(". ")}. Example. ${item.example}. `
+        arrayMeaning.push({key:'en', text: item.word})
+        item.definition.map((data, indexDef) => {
+          arrayMeaning.push({key: 'en', text: (indexDef === 0 ? 'Definition. ' : '') + data.meaning})
+          arrayMeaning.push({key: 'vn', text: data.meaningVN})
+        })
+        arrayMeaning.push({key:'en', text: 'Example. ' + item.example})
+        arrayMeaning.push({key:'en', text: item.exampleVN})
       })
+      state.textToSpeechWord = JSON.parse(JSON.stringify(arrayMeaning))
     })
   },
 })
