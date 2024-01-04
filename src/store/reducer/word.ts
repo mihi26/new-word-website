@@ -49,8 +49,10 @@ export const wordSlice = createSlice({
         builder.addCase(getNewWords.fulfilled, (state, {payload}) => {
             state.words = payload.data
             const arrayMeaning: ITextState[] = []
-            payload.data.forEach((item) => {
-                arrayMeaning.push({key: 'en-US', text: item.word})
+            payload.data.forEach((item, index) => {
+                let fullWord = item.word.split('/')[0].trim();
+                fullWord = `Number ${index + 1}. ${fullWord}. ${fullWord.split('').join('. ')}`
+                arrayMeaning.push({key: 'en-US', text: fullWord})
                 item.definition.map((data, indexDef) => {
                     arrayMeaning.push({key: 'en-US', text: (indexDef === 0 ? 'Definition. ' : '') + data.meaning})
                     arrayMeaning.push({key: 'vi-VN', text: data.meaningVN})

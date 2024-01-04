@@ -23,6 +23,8 @@ const TextToSpeech = ({text}) => {
             text.map(data => {
                 const u = new SpeechSynthesisUtterance(data.text)
                 u.voice = voices.find(voice => voice.lang === data.key)!
+                u.rate = 0.8
+                u.pitch = 0.8
                 synth.speak(u)
             })
         }
