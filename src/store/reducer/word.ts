@@ -51,7 +51,7 @@ export const wordSlice = createSlice({
             const arrayMeaning: ITextState[] = []
             payload.data.forEach((item, index) => {
                 let fullWord = item.word.split('/')[0].trim();
-                fullWord = `Number ${index + 1}. ${fullWord}. ${fullWord.split('').join('. ')}`
+                fullWord = `Number ${index + 1}. ${fullWord}. ${fullWord.split('').join(' . ')}`
                 arrayMeaning.push({key: 'en-US', text: fullWord})
                 item.definition.map((data, indexDef) => {
                     arrayMeaning.push({key: 'en-US', text: (indexDef === 0 ? 'Definition. ' : '') + data.meaning})
