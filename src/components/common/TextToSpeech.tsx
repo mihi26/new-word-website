@@ -29,7 +29,7 @@ const TextToSpeech = (props) => {
         if (enVoice && vnVoice) {
             setVoicesForHomePage(enVoice, vnVoice)
         }
-    }, [vnVoice, enVoice])
+    }, [vnVoice, enVoice, setVoicesForHomePage])
 
     const handlePlay = () => {
         if (isPause) {
