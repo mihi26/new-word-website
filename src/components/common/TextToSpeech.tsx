@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react"
-import {RepeatIcon} from "../icons/RepeatIcon"
 import {VolumeUp} from "../icons/VolumeUp"
+import {PauseIcon} from "../icons/PauseIcon";
+import {ResumeIcon} from "../icons/ResumeIcon";
 // import Button from "./Button"
 
 const TextToSpeech = (props) => {
@@ -8,9 +9,7 @@ const TextToSpeech = (props) => {
         text,
         setVoicesForHomePage
     } = props
-    const [isRepeat, setIsRepeat] = useState(false)
-    const [isPause] = useState(true)
-    const [utterance] = useState<any>(null)
+    const [isPause, setIsPause] = useState(false)
     const [voices, setVoices] = useState<any>([])
     const [vnVoice, setVnVoice] = useState<any>('')
     const [enVoice, setEnVoice] = useState<any>('')
@@ -32,30 +31,28 @@ const TextToSpeech = (props) => {
     }, [vnVoice, enVoice, setVoicesForHomePage])
 
     const handlePlay = () => {
-        if (isPause) {
-            const synth = window.speechSynthesis
-            synth.cancel()
-            text.map(data => {
-                const u = new SpeechSynthesisUtterance(data.text)
-                u.voice = voices.find(voice => {
-                    return voice.name === (data.key === 'en-US' ? enVoice : vnVoice)
-                })!
-                u.rate = 0.8
-                synth.speak(u)
-            })
-        }
+        const synth = window.speechSynthesis
+        synth.cancel()
+        text.map(data => {
+            const u = new SpeechSynthesisUtterance(data.text)
+            u.voice = voices.find(voice => {
+                return voice.name === (data.key === 'en-US' ? enVoice : vnVoice)
+            })!
+            u.rate = 0.8
+            synth.speak(u)
+        })
     }
 
-    const handleRepeat = () => {
-        if (isRepeat) {
-            setIsRepeat(false)
-        } else {
-            setIsRepeat(true)
-            utterance.onend = function () {
-                handlePlay()
-            }
-            handlePlay()
-        }
+    const handlePause = () => {
+        setIsPause(true)
+        const synth = window.speechSynthesis
+        synth.pause()
+    }
+
+    const handleResume = () => {
+        setIsPause(false)
+        const synth = window.speechSynthesis
+        synth.resume()
     }
 
     return (
@@ -86,11 +83,12 @@ const TextToSpeech = (props) => {
                 <div className="text-[#066cfa]">Play</div>
             </div>
             <div className="flex gap-3 items-center cursor-pointer w-fit hover:bg-slate-100 rounded p-2"
-                 onClick={handleRepeat}>
+                 onClick={() => isPause ? handleResume() : handlePause()}>
                 <div className="bg-[#066cfa] w-min rounded-3xl p-2">
-                    <RepeatIcon width={24} height={24} color="white"/>
+                    {!isPause ? <PauseIcon width={24} height={24} color="white"/> :
+                        <ResumeIcon width={24} height={24} color="white"/>}
                 </div>
-                <div className="text-[#066cfa]">Repeat</div>
+                <div className="text-[#066cfa]">{!isPause ? 'Pause' : 'Resume'}</div>
             </div>
         </div>
     )
