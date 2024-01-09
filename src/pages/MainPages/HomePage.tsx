@@ -32,7 +32,7 @@ const HomePage = () => {
     const todayWord: TodayWordFunction = () => {
         return words?.slice(-1)[0]
     }
-    const setVoicesForHomePage = (en, vn) => {
+    const setVoicesForHomePage = (en: string, vn: string) => {
         setEnVoiceFromHomePage(current => {
             current = en
             return current

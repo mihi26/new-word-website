@@ -3,7 +3,11 @@ import {RepeatIcon} from "../icons/RepeatIcon"
 import {VolumeUp} from "../icons/VolumeUp"
 // import Button from "./Button"
 
-const TextToSpeech = ({text, setVoicesForHomePage}) => {
+const TextToSpeech = (props) => {
+    const {
+        text,
+        setVoicesForHomePage
+    } = props
     const [isRepeat, setIsRepeat] = useState(false)
     const [isPause] = useState(true)
     const [utterance] = useState<any>(null)
