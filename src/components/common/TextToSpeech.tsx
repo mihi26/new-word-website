@@ -3,7 +3,7 @@ import {RepeatIcon} from "../icons/RepeatIcon"
 import {VolumeUp} from "../icons/VolumeUp"
 // import Button from "./Button"
 
-const TextToSpeech = ({text}) => {
+const TextToSpeech = ({text, setVoicesForHomePage}) => {
     const [isRepeat, setIsRepeat] = useState(false)
     const [isPause] = useState(true)
     const [utterance] = useState<any>(null)
@@ -21,10 +21,16 @@ const TextToSpeech = ({text}) => {
             synth.cancel()
         }
     }, [text])
+    useEffect(() => {
+        if (enVoice && vnVoice) {
+            setVoicesForHomePage(enVoice, vnVoice)
+        }
+    }, [vnVoice, enVoice])
 
     const handlePlay = () => {
         if (isPause) {
             const synth = window.speechSynthesis
+            synth.cancel()
             text.map(data => {
                 const u = new SpeechSynthesisUtterance(data.text)
                 u.voice = voices.find(voice => {
