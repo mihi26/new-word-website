@@ -54,7 +54,10 @@ export const wordSlice = createSlice({
                 fullWord = `Number ${index + 1}. ${fullWord}. ${fullWord.split('').join(' . ')}`
                 arrayMeaning.push({key: 'en-US', text: fullWord})
                 item.definition.map((data, indexDef) => {
-                    arrayMeaning.push({key: 'en-US', text: (indexDef === 0 ? 'Definition. ' : '') + data.meaning})
+                    arrayMeaning.push({
+                        key: 'en-US',
+                        text: (indexDef === 0 ? 'Definition. ' : '') + data.type + ': ' + data.meaning
+                    })
                     arrayMeaning.push({key: 'vi-VN', text: data.meaningVN})
                 })
                 arrayMeaning.push({key: 'en-US', text: 'Example. ' + item.example})
