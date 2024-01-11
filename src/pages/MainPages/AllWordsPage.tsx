@@ -43,12 +43,12 @@ const AllWordsPage = () => {
     {
       id: 3,
       label: "Example",
-      class: "w-[20%] text-center",
+      class: "w-[30%] text-center",
     },
     {
       id: 4,
       label: "Date",
-      class: "w-[20%] text-center",
+      class: "w-[10%] text-center",
     },
   ]
 
