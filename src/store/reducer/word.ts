@@ -7,7 +7,8 @@ import {convertQueryString} from "../../utils"
 
 interface IWordState {
     words: IWord[]
-    textToSpeechWord: ITextState[]
+    textToSpeechWord: ITextState[],
+    pagination: IPaginationState
 }
 
 interface ITextState {
@@ -15,9 +16,22 @@ interface ITextState {
     text: string
 }
 
+interface IPaginationState {
+    page: number,
+    limit: number,
+    total: number,
+    totalPages: number,
+}
+
 const initialState: IWordState = {
     words: [],
     textToSpeechWord: [],
+    pagination: {
+        page: 1,
+        limit: 10,
+        total: 0,
+        totalPages: 0,
+    }
 }
 
 export const getNewWords = createAsyncThunk(
@@ -48,6 +62,7 @@ export const wordSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getNewWords.fulfilled, (state, {payload}) => {
             state.words = payload.data
+            state.pagination = payload.meta
             const arrayMeaning: ITextState[] = []
             payload.data.forEach((item, index) => {
                 let fullWord = item.word.split('/')[0].trim();
