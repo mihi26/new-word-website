@@ -27,8 +27,11 @@ const UserNewWordTable = (props) => {
     arrayMeaning.push({ key: "en-US", text: fullWord })
     item.definition.map((data, indexDef) => {
       arrayMeaning.push({
+                
         key: "en-US",
-        text: (indexDef === 0 ? "Definition. " : "") + data.meaning,
+       
+                text: (indexDef === 0 ? "Definition. " : "") + data.type + ': ' + data.meaning
+            ,
       })
       arrayMeaning.push({ key: "vi-VN", text: data.meaningVN })
     })
@@ -73,7 +76,7 @@ const UserNewWordTable = (props) => {
           <div className="w-[35%]">
             {item.definition?.map((def) => (
               <div className="p-1" key={`${def.type} ${def.meaning}`}>
-                - {def.meaning} ({def.meaningVN})
+                - ({def.type}): {def.meaning} ({def.meaningVN})
               </div>
             ))}
           </div>
