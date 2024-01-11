@@ -12,6 +12,7 @@ import NotFoundPage from "../pages/ErrorPages/NotFoundPage"
 import AllWordsPage from "../pages/MainPages/AllWordsPage"
 import HomePage from "../pages/MainPages/HomePage"
 import MainPage from "../pages/MainPages/MainPage"
+import WordDetailPage from "../pages/MainPages/WordDetailPage"
 import LoginView from "../views/AuthView/LoginView"
 import RegisterView from "../views/AuthView/RegisterView"
 
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
         <Route index element={<Navigate to="home" />} />
         <Route path="home" element={<HomePage />} />
         <Route path="all-words" element={<AllWordsPage />} />
+        <Route path="word/:wordId" element={<WordDetailPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Route>

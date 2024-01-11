@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
+import ApiClientWithToken from "../../api/api"
+import Pagination from "../../components/common/Pagination"
 import TextToSpeech from "../../components/common/TextToSpeech"
 import UserNewWordTable from "../../components/table/UserNewWordTable"
-import { AppDispatch } from "../../store"
-import { getNewWords, selectWords } from "../../store/reducer/word"
+import word, { selectWords } from "../../store/reducer/word"
+import { IWordMeta, IWordParams } from "../../types"
+import { convertQueryString } from "../../utils"
 
 const AllWordsPage = () => {
-  const { words, textToSpeechWord } = useSelector(selectWords)
-  const [wordParams] = useState({
+  const { textToSpeechWord } = useSelector(selectWords)
+  const [words, setWords] = useState([])
+  const [vnVoiceFromHomePage, setVnVoiceFromHomePage] = useState<any>("")
+  const [enVoiceFromHomePage, setEnVoiceFromHomePage] = useState<any>("")
+  const [wordParams, setWordParams] = useState<IWordParams>({
     page: 1,
     limit: 10,
   })
-  const dispatch = useDispatch<AppDispatch>()
+  const [wordMeta, setWordMeta] = useState<IWordMeta>({
+    page: 0,
+    limit: 0,
+    total: 0,
+    totalPages: 0,
+  })
 
   const tableHeader = [
     {
@@ -41,28 +52,75 @@ const AllWordsPage = () => {
     },
   ]
 
+  const getNewWords = async () => {
+    let res = await ApiClientWithToken.get(
+      `word${convertQueryString(wordParams)}`
+    )
+    setWords(res.data.data)
+    setWordMeta(res.data.meta)
+  }
+
+  const setVoicesForHomePage = (en: string, vn: string) => {
+    setEnVoiceFromHomePage((current) => {
+      current = en
+      return current
+    })
+    setVnVoiceFromHomePage((current) => {
+      current = vn
+      return current
+    })
+  }
+
+  const handleNextPage = () => {
+    setWordParams((prevState) => ({
+      ...prevState,
+      page: prevState.page + 1,
+    }))
+  }
+
+  const handlePrevPage = () => {
+    setWordParams((prevState) => ({
+      ...prevState,
+      page: prevState.page - 1,
+    }))
+  }
+
   useEffect(() => {
-    dispatch(getNewWords(wordParams))
-  }, [])
+    getNewWords()
+  }, [wordParams])
 
   return (
     <div className="flex flex-col gap-[30px]">
-    <div className="flex flex-col rounded-b bg-white shadow">
-      <div className="flex h-[75px] justify-between items-center px-[20px] border-b">
-        <div className="text-2xl text-black font-medium">All your new words</div>
-        <div className="w-[84px] h-[31px] text-sm">
-          <TextToSpeech text={textToSpeechWord} />
+      <div className="flex flex-col rounded-b bg-white shadow">
+        <div className="flex h-[75px] justify-between items-center px-[20px] border-b">
+          <div className="text-2xl text-black font-medium">
+            All your new words
+          </div>
+          <TextToSpeech
+            text={textToSpeechWord}
+            setVoicesForHomePage={setVoicesForHomePage}
+          />
+        </div>
+        <div className="p-[20px] flex flex-col gap-[10px]">
+          <UserNewWordTable
+            vnVoiceFromHomePage={vnVoiceFromHomePage}
+            enVoiceFromHomePage={enVoiceFromHomePage}
+            tableHeader={tableHeader}
+            tableData={words}
+            keyName="word"
+          />
+          <div className="ml-auto">
+            <Pagination
+              total={wordMeta.total}
+              page={wordParams?.page}
+              limit={wordParams?.limit}
+              onNext={handleNextPage}
+              onPrev={handlePrevPage}
+            />
+          </div>
         </div>
       </div>
-      <div className="p-[20px] flex flex-col gap-[10px]">
-        <UserNewWordTable
-          tableHeader={tableHeader}
-          tableData={words}
-          keyName="word"
-        />
-      </div>
     </div>
-  </div>
   )
 }
 

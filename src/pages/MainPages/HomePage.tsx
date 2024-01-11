@@ -11,8 +11,8 @@ import {IWord} from "../../types"
 type TodayWordFunction = () => IWord
 
 const HomePage = () => {
-    const [vnVoiceFromHomePage, setVnVoiceFromHomePage] = useState<any>('hello ')
-    const [enVoiceFromHomePage, setEnVoiceFromHomePage] = useState<any>('holle')
+    const [vnVoiceFromHomePage, setVnVoiceFromHomePage] = useState<any>('')
+    const [enVoiceFromHomePage, setEnVoiceFromHomePage] = useState<any>('')
     const {words, textToSpeechWord} = useSelector(selectWords)
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
@@ -61,12 +61,12 @@ const HomePage = () => {
         {
             id: 3,
             label: "Example",
-            class: "w-[20%] text-center",
+            class: "w-[30%] text-center",
         },
         {
             id: 4,
             label: "Date",
-            class: "w-[20%] text-center",
+            class: "w-[10%] text-center",
         },
     ]
 
