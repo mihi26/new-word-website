@@ -72,6 +72,10 @@ const AllWordsPage = () => {
   }
 
   const handleNextPage = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
     setWordParams((prevState) => ({
       ...prevState,
       page: prevState.page + 1,
@@ -79,6 +83,10 @@ const AllWordsPage = () => {
   }
 
   const handlePrevPage = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
     setWordParams((prevState) => ({
       ...prevState,
       page: prevState.page - 1,
