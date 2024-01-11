@@ -100,7 +100,8 @@ const HomePage = () => {
             </div>
             <div className="flex flex-col rounded-b bg-white shadow">
                 <div className="flex h-[75px] justify-between items-center px-[20px] border-b">
-                    <div className="text-2xl text-black font-medium">Today's new words</div>
+                    <div className="text-2xl text-black font-medium">Today's new words
+                        - {words[0].category}</div>
                     <TextToSpeech text={textToSpeechWord} setVoicesForHomePage={setVoicesForHomePage}/>
                 </div>
                 <div className="p-[20px] flex flex-col gap-[10px]">
