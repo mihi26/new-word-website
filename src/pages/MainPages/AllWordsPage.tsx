@@ -4,7 +4,7 @@ import ApiClientWithToken from "../../api/api"
 import Pagination from "../../components/common/Pagination"
 import TextToSpeech from "../../components/common/TextToSpeech"
 import UserNewWordTable from "../../components/table/UserNewWordTable"
-import word, { selectWords } from "../../store/reducer/word"
+import { selectWords } from "../../store/reducer/word"
 import { IWordMeta, IWordParams } from "../../types"
 import { convertQueryString } from "../../utils"
 
