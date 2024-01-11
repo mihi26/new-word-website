@@ -28,7 +28,6 @@ export interface IWordParams {
   limit: number
 }
 
-
 export interface IWordMeta {
   page: number,
   limit: number,
