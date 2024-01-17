@@ -6,6 +6,7 @@ import UserNewWordTable from "../../components/table/UserNewWordTable"
 import {getNewWords, selectWords} from "../../store/reducer/word"
 import {IWordMeta, IWordParams} from "../../types"
 import {AppDispatch} from "../../store";
+import { useNavigate } from "react-router-dom"
 
 const AllWordsPage = () => {
     const {words, textToSpeechWord, pagination} = useSelector(selectWords)
@@ -22,6 +23,11 @@ const AllWordsPage = () => {
         totalPages: 0,
     })
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
+
+    const handleRedirectWordDetail = (wordId) => {
+        navigate(`/word/${wordId}`)
+      }
 
     const tableHeader = [
         {
@@ -61,7 +67,6 @@ const AllWordsPage = () => {
 
     useEffect(() => {
         setWordMeta(pagination)
-        console.log(pagination)
     }, [pagination])
     const setVoicesForHomePage = (en: string, vn: string) => {
         console.log(en)
@@ -116,6 +121,7 @@ const AllWordsPage = () => {
                         tableHeader={tableHeader}
                         tableData={words}
                         keyName="word"
+                        onClickWord={handleRedirectWordDetail}
                     />
                     <div className="ml-auto">
                         <Pagination

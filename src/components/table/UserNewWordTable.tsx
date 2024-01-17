@@ -14,6 +14,7 @@ const UserNewWordTable = (props) => {
     keyName = "name",
     vnVoiceFromHomePage,
     enVoiceFromHomePage,
+    onClickWord,
   } = props
   const handlePlaySound = async (item, index) => {
     const synth = window.speechSynthesis
@@ -27,11 +28,13 @@ const UserNewWordTable = (props) => {
     arrayMeaning.push({ key: "en-US", text: fullWord })
     item.definition.map((data, indexDef) => {
       arrayMeaning.push({
-                
         key: "en-US",
-       
-                text: (indexDef === 0 ? "Definition. " : "") + data.type + ': ' + data.meaning
-            ,
+
+        text:
+          (indexDef === 0 ? "Definition. " : "") +
+          data.type +
+          ": " +
+          data.meaning,
       })
       arrayMeaning.push({ key: "vi-VN", text: data.meaningVN })
     })
@@ -65,7 +68,12 @@ const UserNewWordTable = (props) => {
         >
           <div className="w-[5%] text-center h-full">{index + 1}</div>
           <div className="w-[20%] text-center break-all flex items-center gap-2">
-            {item[keyName]}
+            <div
+              className="cursor-pointer hover:text-[#066cfa]"
+              onClick={() => onClickWord(item[keyId])}
+            >
+              {item[keyName]}
+            </div>
             <div
               className="bg-[#066cfa] w-min rounded-3xl p-2 cursor-pointer"
               onClick={() => handlePlaySound(item, index)}
