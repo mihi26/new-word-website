@@ -1,7 +1,7 @@
-import { useState, useEffect, Fragment } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import {Fragment, useEffect, useState} from "react"
+import {useNavigate, useParams} from "react-router-dom"
 import ApiClientWithToken from "../../api/api"
-import { BackArrow } from "../../components/icons/BackArrow"
+import {BackArrow} from "../../components/icons/BackArrow"
 
 const WordDetailPage = () => {
   const [wordDetail, setWordDetail] = useState<any>({})
@@ -13,7 +13,7 @@ const WordDetailPage = () => {
   }, [])
 
   const getWordDetail = async () => {
-    let res = await ApiClientWithToken.get(`word/${params.wordId}`)
+    const res = await ApiClientWithToken.get(`word/${params.wordId}`)
     setWordDetail(res.data)
   }
 
@@ -39,19 +39,22 @@ const WordDetailPage = () => {
             <div className="text-xl text-black font-bold">Definition</div>
             {wordDetail.definition
               ? wordDetail.definition.map((definition) => (
+                <div
+                  className="flex gap-3 items-center"
+                  key={definition.type + definition.meaning}
+                >
+                  <div className="font-bold min-w-20">{definition.type}</div>
                   <div
-                    className="flex gap-3 items-center"
-                    key={definition.type + definition.meaning}
-                  >
-                    <div className="font-bold min-w-20">{definition.type}</div>
-                    <div className="text-black">{`${definition.meaning} (${definition.meaningVN})`}</div>
-                  </div>
-                ))
+                    className="text-black">{`${definition.meaning} (${definition.meaningVN})`}</div>
+                </div>
+              ))
               : ""}
           </div>
           <div className="text-xl text-black font-bold">Example</div>
           <div className="text-black italic">{`"${wordDetail.example}"`}</div>
           <div className="text-black italic">{`"${wordDetail.exampleVN}"`}</div>
+          <div className="text-xl text-black font-bold">Collocations</div>
+          <div dangerouslySetInnerHTML={{__html: wordDetail.collocation}}/>
           {wordDetail.synonyms ? (
             <Fragment>
               <div className="text-xl text-black font-bold">Synonyms</div>
@@ -84,13 +87,13 @@ const WordDetailPage = () => {
                       <div className="flex gap-4 flex-wrap">
                         {synonym.strong
                           ? synonym.strong.map((word) => (
-                              <div
-                                className="underline underline-offset-4 decoration-4 decoration-[#00da1b80]"
-                                key={`strong ${word}`}
-                              >
-                                {word}
-                              </div>
-                            ))
+                            <div
+                              className="underline underline-offset-4 decoration-4 decoration-[#00da1b80]"
+                              key={`strong ${word}`}
+                            >
+                              {word}
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </Fragment>
@@ -103,13 +106,13 @@ const WordDetailPage = () => {
                       <div className="flex gap-4 flex-wrap">
                         {synonym.weak
                           ? synonym.weak.map((word) => (
-                              <div
-                                className="underline underline-offset-4 decoration-4 decoration-[#00da1b33]"
-                                key={`weak ${word}`}
-                              >
-                                {word}
-                              </div>
-                            ))
+                            <div
+                              className="underline underline-offset-4 decoration-4 decoration-[#00da1b33]"
+                              key={`weak ${word}`}
+                            >
+                              {word}
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </Fragment>
