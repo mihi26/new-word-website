@@ -12,7 +12,7 @@ import NotFoundPage from "../pages/ErrorPages/NotFoundPage"
 import AllWordsPage from "../pages/MainPages/AllWordsPage"
 import HomePage from "../pages/MainPages/HomePage"
 import MainPage from "../pages/MainPages/MainPage"
-import WordDetailPage from "../pages/MainPages/WordDetailPage"
+import WordDetailPage from "../pages/MainPages/WordDetailPage/WordDetailPage"
 import LoginView from "../views/AuthView/LoginView"
 import RegisterView from "../views/AuthView/RegisterView"
 

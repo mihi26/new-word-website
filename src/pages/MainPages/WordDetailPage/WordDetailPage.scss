@@ -1,0 +1,27 @@
+.collocation {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  
+  .word {
+    font-size: 24px;
+  }
+
+  p:not(.word) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    u {
+      color: #34d399;
+    }
+  }
+
+  sup {
+    display: none;
+  }
+
+  tt {
+    color: #066ffa;
+  }
+}
